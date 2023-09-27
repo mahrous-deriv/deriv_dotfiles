@@ -1,12 +1,15 @@
 [user]
 	name     = Mahrous
-	email    = mahrous@deriv.com
+	email    = mahrous@regentmarkets.com
 	username = mahrous-deriv
+	signingkey = AAEF703B848B1E6C 
+[commit]
+	gpgsign = true
 [core]
 	editor     = vim
 	whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol
 	pager      = delta
-    excludesfile = ~/.gitignore 
+  excludesfile = ~/.gitignore 
 [web]
 	browser = chrome
 [rerere]
@@ -252,3 +255,5 @@
 	theirs  = "!f() { git checkout --theirs $@ && git add $@; }; f"
 	subrepo = !sh -c 'git filter-branch --prune-empty --subdirectory-filter $1 master' -
 	human   = name-rev --name-only --refs=refs/heads/*
+[commit]
+	gpgsign = true
