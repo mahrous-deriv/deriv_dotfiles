@@ -212,17 +212,17 @@ set wildignore=*.docx,*.jpg,*.png,*.gif,*.pdf,*.pyc,*.exe,*.flv,*.img,*.xlsx
 
 set hidden                              " Required to keep multiple buffers open multiple buffers
 set encoding=utf-8                      " The encoding displayed
-set pumheight=10                        " Makes popup menu smaller
-set fileencoding=utf-8                  " The encoding written to file
-set ruler                  			        " Show the cursor position all the time
+set pumheight=10                        " Makes the popup menu smaller
+set fileencoding=utf-8                  " The encoding written to the file
+set ruler                  			    " Show the cursor position all the time
 set cmdheight=2                         " More space for displaying messages
-set iskeyword+=-                      	" treat dash separated words as a word text object"
+set iskeyword+=-                      	" treat dash separated words as a word text object
 set mouse=a                             " Enable your mouse
 set splitbelow                          " Horizontal splits will automatically be below
 set splitright                          " Vertical splits will automatically be to the right
 set t_Co=256                            " Support 256 colors
 set conceallevel=0                      " So that I can see `` in markdown files
-set smarttab                            " Makes tabbing smarter will realize you have 2 vs 4
+set smarttab                            " Makes tabbing smarter and will realize you have 2 vs 4
 set smartindent                         " Makes indenting smart
 set autoindent                          " Good auto indent
 set showtabline=2                       " Always show tabs
@@ -230,8 +230,8 @@ set noshowmode                          " We don't need to see things like -- IN
 set nowritebackup                       " This is recommended by coc
 set updatetime=300                      " Faster completion
 set timeoutlen=500                      " By default timeoutlen is 1000 ms
-set formatoptions-=cro                  " Stop newline continution of comments
-set clipboard=unnamedplus               " Copy paste between vim and everything else
+set formatoptions-=cro                  " Stop newline continuation of comments
+set clipboard=unnamedplus               " Copy and paste between Vim and everything else
 "set autochdir                          " Your working directory will always be the same as your working directory
 set visualbell                          " Blink cursor on error instead of beeping (grr)
 set modelines=0                         " Security
