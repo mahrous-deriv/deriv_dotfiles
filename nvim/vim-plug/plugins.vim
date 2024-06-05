@@ -36,7 +36,7 @@
         let g:airline#extensions#tabline#tab_nr_type = 2
         let g:airline#extensions#bufferline#enabled = 1
         " Switch to your current theme
-        let g:airline_theme = 'onedark'
+        let g:airline_theme = 'gruvbox'
         " Always show tabs
         set showtabline=2
       " }}}
