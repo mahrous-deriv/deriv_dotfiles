@@ -10,9 +10,9 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""               
 source $HOME/.config/nvim/vim-plug/plugins.vim
 source $HOME/.config/nvim/keys/mappings.vim
-source $HOME/.config/nvim/themes/onedark.vim
+"source $HOME/.config/nvim/themes/onedark.vim
 source $HOME/.config/nvim/themes/gruvbox.vim
-source $HOME/.config/nvim/themes/iceberg.vim
+"source $HOME/.config/nvim/themes/iceberg.vim
 
 " Disable compatibility with vi which can cause unexpected issues.
 set nocompatible
