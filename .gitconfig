@@ -2,7 +2,7 @@
 	name     = Mahrous
 	email    = mahrous@regentmarkets.com
 	username = mahrous-deriv
-	signingkey = AAEF703B848B1E6C 
+	signingkey = 30BC02A9F369719B 
 [commit]
 	gpgsign = true
 [core]
