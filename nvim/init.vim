@@ -39,10 +39,10 @@ set cursorline
 set cursorcolumn
 
 " Set shift width to 4 spaces.
-set shiftwidth=2
+set shiftwidth=4
 
 " Set tab width to 4 columns.
-set tabstop=2
+set tabstop=4
 
 " Use space characters instead of tabs.
 set expandtab
@@ -225,16 +225,17 @@ set conceallevel=0                      " So that I can see `` in markdown files
 set smarttab                            " Makes tabbing smarter and will realize you have 2 vs 4
 set smartindent                         " Makes indenting smart
 set autoindent                          " Good auto indent
-set showtabline=2                       " Always show tabs
+set showtabline=4                       " Always show tabs
 set noshowmode                          " We don't need to see things like -- INSERT -- anymore
 set nowritebackup                       " This is recommended by coc
 set updatetime=300                      " Faster completion
 set timeoutlen=500                      " By default timeoutlen is 1000 ms
 set formatoptions-=cro                  " Stop newline continuation of comments
-set clipboard=unnamedplus               " Copy and paste between Vim and everything else
+set clipboard^=unnamed,unnamedplus      " Copy and paste between Vim and everything else
 "set autochdir                          " Your working directory will always be the same as your working directory
 set visualbell                          " Blink cursor on error instead of beeping (grr)
 set modelines=0                         " Security
 set listchars=tab:▸\ ,eol:¬             " Visualize tabs and newlines
 set noswapfile                          " Disabiling .swp files
 set ttyfast                             " Rendering
+set foldmethod=manual                   " Vim doesn't attempt to automatically figure out the foldable areas of text
