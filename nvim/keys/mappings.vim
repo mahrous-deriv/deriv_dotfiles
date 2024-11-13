@@ -2,6 +2,24 @@
     " Set the backslash as the leader key.
     let mapleader = '\'
 
+    " Theme Switching Setup
+    " --------------------------------------------------------------------------
+    let g:colorschemes = ['gruvbox', 'onedark', 'iceberg']  " Define available themes
+    let g:current_colorscheme_index = 0                    " Start with the first theme
+    colorscheme gruvbox            " Set initial color scheme
+
+    " Function to switch color schemes
+    function! ToggleColorScheme()
+        let g:current_colorscheme_index = (g:current_colorscheme_index + 1) % len(g:colorschemes)
+        let l:next_scheme = g:colorschemes[g:current_colorscheme_index]
+        execute 'colorscheme ' . l:next_scheme
+        echo "Color Scheme: " . l:next_scheme
+    endfunction
+
+    " Key Mappings for Theme Switching
+    nnoremap <leader>tc :call ToggleColorScheme()<CR>  " <leader> + tc to cycle themes
+    nnoremap <leader>dc :execute 'colorscheme ' . g:colorschemes[0]<CR>  " <leader> + dc for default
+
     " Press \ `` to jump back to the last cursor position.
     nnoremap <leader>\ ``
 
