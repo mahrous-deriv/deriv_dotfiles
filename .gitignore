@@ -1,0 +1,3 @@
+nvim/backup/*
+nvim/autoload/*
+linklocal.sh
