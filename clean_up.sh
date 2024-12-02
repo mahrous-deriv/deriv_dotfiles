@@ -4,51 +4,71 @@
 # Author: mahrous-deriv
 # Usage: Run as root or with sudo
 
-echo "Starting comprehensive disk cleanup..."
+# Enable debugging and exit on errors
+set -euo pipefail
+trap 'echo "An error occurred on line $LINENO. Exiting."; exit 1' ERR
 
-echo "Cleaning up APT cache..."
-sudo apt-get clean
-sudo apt-get autoclean
+# Variables
+LOGFILE="/var/log/disk_cleanup.log"
+TIMESTAMP=$(date "+%Y-%m-%d %H:%M:%S")
 
-echo "Removing unused packages..."
-sudo apt-get autoremove -y
+# Function to log messages
+log_message() {
+    echo "[$TIMESTAMP] $1" | tee -a $LOGFILE
+}
 
-echo "Clearing old systemd journal logs..."
-sudo journalctl --vacuum-time=2weeks
-sudo journalctl --vacuum-size=100M
+# Start cleanup process
+log_message "Starting comprehensive disk cleanup..."
 
-echo "Removing old log files..."
-sudo find /var/log -type f -name "*.log.*" -delete
+log_message "Cleaning up APT cache..."
+sudo apt-get clean >> $LOGFILE 2>&1
+sudo apt-get autoclean >> $LOGFILE 2>&1
 
+log_message "Removing unused packages..."
+sudo apt-get autoremove -y >> $LOGFILE 2>&1
+
+log_message "Clearing old systemd journal logs..."
+sudo journalctl --vacuum-time=2weeks >> $LOGFILE 2>&1
+sudo journalctl --vacuum-size=100M >> $LOGFILE 2>&1
+
+log_message "Removing old log files..."
+sudo find /var/log -type f -name "*.log.*" -delete >> $LOGFILE 2>&1
+
+# Docker cleanup if installed
 if [ -x "$(command -v docker)" ]; then
-    echo "Cleaning up Docker system..."
-    sudo docker system prune -af
-    sudo docker volume prune -f
+    log_message "Cleaning up Docker system..."
+    sudo docker system prune -af >> $LOGFILE 2>&1
+    sudo docker volume prune -f >> $LOGFILE 2>&1
 fi
 
-echo "Removing orphaned cache files..."
-sudo find /var/cache -type f -atime +30 -delete
+log_message "Removing orphaned cache files..."
+sudo find /var/cache -type f -atime +30 -delete >> $LOGFILE 2>&1
 
-echo "Clearing thumbnails cache..."
-sudo rm -rf ~/.cache/thumbnails/*
+log_message "Clearing thumbnails cache..."
+sudo rm -rf ~/.cache/thumbnails/* >> $LOGFILE 2>&1
 
-echo "Clearing user caches..."
+log_message "Clearing user caches..."
 for user in /home/*; do
-    echo "Cleaning cache for user $(basename $user)..."
-    sudo find $user/.cache -type f -delete
+    username=$(basename "$user")
+    if [ -d "$user/.cache" ]; then
+        log_message "Cleaning cache for user $username..."
+        sudo find "$user/.cache" -type f -delete >> $LOGFILE 2>&1
+    else
+        log_message "No cache directory found for user $username."
+    fi
 done
 
-echo "Cleaning /tmp directory..."
-sudo find /tmp -type f -atime +7 -delete
+log_message "Cleaning /tmp directory..."
+sudo find /tmp -type f -atime +7 -delete >> $LOGFILE 2>&1
 
-echo "Finding large files over 500MB..."
-find / -type f -size +500M -exec ls -lh {} \; | awk '{ print $NF ": " $5 }' | tee large_files.txt
-echo "Review 'large_files.txt' and delete files manually if needed."
+log_message "Finding large files over 500MB..."
+find / \( -path /proc -o -path /sys -o -path /dev -o -path /run -o -path /snap -o -path /tmp -o -path /var/lib/docker \) -prune -o -type f -size +500M -exec ls -lh {} \; 2>/dev/null | awk '{ print $NF ": " $5 }' | tee -a $LOGFILE >> large_files.txt
+log_message "Review 'large_files.txt' and delete files manually if needed."
 
-echo "Optimizing file system..."
-sudo e4defrag /
+log_message "Optimizing file system..."
+sudo e4defrag / >> $LOGFILE 2>&1 || log_message "e4defrag not supported on this file system."
 
-echo "Disk usage after cleanup:"
-df -h
+log_message "Disk usage after cleanup:"
+df -h | tee -a $LOGFILE
 
-echo "Comprehensive disk cleanup complete!"
+log_message "Comprehensive disk cleanup complete!"
