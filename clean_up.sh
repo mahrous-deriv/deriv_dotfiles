@@ -44,9 +44,6 @@ fi
 log_message "Removing orphaned cache files..."
 sudo find /var/cache -type f -atime +30 -delete >> $LOGFILE 2>&1
 
-log_message "Clearing thumbnails cache..."
-sudo rm -rf ~/.cache/thumbnails/* >> $LOGFILE 2>&1
-
 log_message "Clearing user caches..."
 for user in /home/*; do
     username=$(basename "$user")
