@@ -65,9 +65,6 @@ log_message "Finding large files over 500MB..."
 find / \( -path /proc -o -path /sys -o -path /dev -o -path /run -o -path /snap -o -path /tmp -o -path /var/lib/docker \) -prune -o -type f -size +500M -exec ls -lh {} \; 2>/dev/null | awk '{ print $NF ": " $5 }' | tee -a $LOGFILE >> large_files.txt
 log_message "Review 'large_files.txt' and delete files manually if needed."
 
-log_message "Optimizing file system..."
-sudo e4defrag / >> $LOGFILE 2>&1 || log_message "e4defrag not supported on this file system."
-
 log_message "Disk usage after cleanup:"
 df -h | tee -a $LOGFILE
 
